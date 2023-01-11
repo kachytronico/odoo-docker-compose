@@ -2,23 +2,23 @@ version: '2'
 services:
   web:
     image: odoo:15.0
+    restart: unless-stopped
     depends_on:
       - db
     ports:
       - "8069:8069"
     volumes:
-      - /share/DockerVolumes/odoo-web-data:/var/lib/odoo
-      - /share/DockerVolumes/odoo-web-data/config:/etc/odoo
-      - /share/DockerVolumes/odoo-web-data/addons:/mnt/extra-addons
+      - /share/DockerVolumes/odoo/odoo-web-data:/var/lib/odoo
+      - /share/DockerVolumes/odoo/config:/etc/odoo
+      - /share/DockerVolumes/odoo/addons:/mnt/extra-addons
   db:
     image: postgres:10
+    restart: unless-stopped
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - /share/DockerVolumes/odoo-db-data:/var/lib/postgresql/data/pgdata
-volumes:
-  odoo-web-data:
-  odoo-db-data:
+      - /share/DockerVolumes/odoo/odoo-db-data:/var/lib/postgresql/data/pgdata
+
